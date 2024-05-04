@@ -264,7 +264,7 @@ Set-PSReadLineOption -Colors @{
 }
 
 ## Final Line to set prompt
-oh-my-posh.exe init pwsh --config "C:\Users\rtac\Desktop\Mikeys_Junk\png\easy-term.omp.json" | Invoke-Expression 
+oh-my-posh.exe init pwsh --config "https://github.com/Critlist/powershell-profile/blob/main/easy-term.omp.json" | Invoke-Expression 
 
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     Invoke-Expression (& { (zoxide init powershell | Out-String) })
