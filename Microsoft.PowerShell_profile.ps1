@@ -191,6 +191,13 @@ function pgrep($name) {
     Get-Process $name
 }
 
+function explorer {
+    param($dir)
+    if ($dir -eq 'pwd') {
+        Start-Process explorer.exe -ArgumentList (Convert-Path (Get-Location))
+    }
+}
+
 function head {
     param($Path, $n = 10)
     Get-Content $Path -Head $n
