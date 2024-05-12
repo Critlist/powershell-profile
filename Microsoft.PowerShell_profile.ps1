@@ -23,7 +23,7 @@ function Update-Profile {
     }
 
     try {
-        $url = "https://github.com/Critlist/powershell-profile/raw/main/Microsoft.PowerShell_profile.ps1"
+        $url = "https://raw.githubusercontent.com/Critlist/powershell-profile/main/Microsoft.PowerShell_profile.ps1"
         $oldhash = Get-FileHash $PROFILE
         Invoke-RestMethod $url -OutFile "$env:temp/Microsoft.PowerShell_profile.ps1"
         $newhash = Get-FileHash "$env:temp/Microsoft.PowerShell_profile.ps1"
@@ -271,7 +271,7 @@ Set-PSReadLineOption -Colors @{
 }
 
 ## Final Line to set prompt
-oh-my-posh.exe init pwsh --config "https://github.com/Critlist/powershell-profile/blob/main/easy-term.omp.json" | Invoke-Expression 
+oh-my-posh.exe init pwsh --config "https://raw.githubusercontent.com/Critlist/powershell-profile/main/easy-term.omp.json" | Invoke-Expression 
 
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     Invoke-Expression (& { (zoxide init powershell | Out-String) })
