@@ -193,7 +193,7 @@ function pgrep($name) {
 
 function explorer {
     param($dir)
-    if ($dir -eq 'pwd') {
+    if ($dir -eq "pwd") {
         Start-Process explorer.exe -ArgumentList (Convert-Path (Get-Location))
     }
 }
