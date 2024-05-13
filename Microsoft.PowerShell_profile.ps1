@@ -99,7 +99,7 @@ else { 'notepad' }
 
 
 Set-Alias -Name vim -Value $EDITOR
-
+Set-Alias -Name sudo -Value gsudo
 function Edit-Profile {
     vim $PROFILE.CurrentUserAllHosts
 }
