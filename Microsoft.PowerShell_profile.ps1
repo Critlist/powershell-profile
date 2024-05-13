@@ -273,7 +273,7 @@ Set-PSReadLineOption -Colors @{
 ## Final Line to set prompt
 oh-my-posh.exe init pwsh --config "https://raw.githubusercontent.com/Critlist/powershell-profile/main/easy-term.omp.json" | Invoke-Expression 
 
-Invoke-Expression (&starship init powershell)
+# Invoke-Expression (&starship init powershell)
 
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     Invoke-Expression (& { (zoxide init powershell | Out-String) })
