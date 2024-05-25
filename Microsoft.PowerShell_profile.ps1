@@ -271,7 +271,7 @@ Set-PSReadLineOption -Colors @{
 }
 
 ## Final Line to set prompt
-Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+# Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 oh-my-posh.exe init pwsh --config "https://raw.githubusercontent.com/Critlist/powershell-profile/main/easy-term.omp.json" | Invoke-Expression 
 Import-Module PSReadLine
 # Invoke-Expression (&starship init powershell)
