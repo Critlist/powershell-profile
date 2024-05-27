@@ -132,33 +132,15 @@ function unzip ($file) {
     $fullFile = Get-ChildItem -Path $pwd -Filter $file | ForEach-Object { $_.FullName }
     Expand-Archive -Path $fullFile -DestinationPath $pwd
 }
-# function hb {
-#     if ($args.Length -eq 0) {
-#         Write-Error "No file path specified."
-#         return
-#     }
-    
-#     $FilePath = $args[0]
-    
-#     if (Test-Path $FilePath) {
-#         $Content = Get-Content $FilePath -Raw
-#     }
-#     else {
-#         Write-Error "File path does not exist."
-#         return
-#     }
-    
-#     $uri = "http://bin.christitus.com/documents"
-#     try {
-#         $response = Invoke-RestMethod -Uri $uri -Method Post -Body $Content -ErrorAction Stop
-#         $hasteKey = $response.key
-#         $url = "http://bin.christitus.com/$hasteKey"
-#         Write-Output $url
-#     }
-#     catch {
-#         Write-Error "Failed to upload the document. Error: $_"
-#     }
-# }
+function yy {
+    $tmp = [System.IO.Path]::GetTempFileName()
+    yazi $args --cwd-file="$tmp"
+    $cwd = Get-Content -Path $tmp
+    if (-not [String]::IsNullOrEmpty($cwd) -and $cwd -ne $PWD.Path) {
+        Set-Location -LiteralPath $cwd
+    }
+    Remove-Item -Path $tmp
+}
 function grep($regex, $dir) {
     if ( $dir ) {
         Get-ChildItem $dir | select-string $regex
