@@ -15,29 +15,29 @@ if (Test-Path($ChocolateyProfile)) {
     Import-Module "$ChocolateyProfile"
 }
 
-# Check for Profile Updates
-function Update-Profile {
-    if (-not $global:canConnectToGitHub) {
-        Write-Host "Skipping profile update check due to GitHub.com not responding within 1 second." -ForegroundColor Yellow
-        return
-    }
+# # Check for Profile Updates
+# function Update-Profile {
+#     if (-not $global:canConnectToGitHub) {
+#         Write-Host "Skipping profile update check due to GitHub.com not responding within 1 second." -ForegroundColor Yellow
+#         return
+#     }
 
-    try {
-        $url = "https://raw.githubusercontent.com/Critlist/powershell-profile/main/Microsoft.PowerShell_profile.ps1"
-        $oldhash = Get-FileHash $PROFILE
-        Invoke-RestMethod $url -OutFile "$env:temp/Microsoft.PowerShell_profile.ps1"
-        $newhash = Get-FileHash "$env:temp/Microsoft.PowerShell_profile.ps1"
-        if ($newhash.Hash -ne $oldhash.Hash) {
-            Copy-Item -Path "$env:temp/Microsoft.PowerShell_profile.ps1" -Destination $PROFILE -Force
-            Write-Host "Profile has been updated. Please restart your shell to reflect changes" -ForegroundColor Magenta
-        }
-    } catch {
-        Write-Error "Unable to check for `$profile updates"
-    } finally {
-        Remove-Item "$env:temp/Microsoft.PowerShell_profile.ps1" -ErrorAction SilentlyContinue
-    }
-}
-# Update-Profile
+#     try {
+#         $url = "https://raw.githubusercontent.com/ChrisTitusTech/powershell-profile/main/Microsoft.PowerShell_profile.ps1"
+#         $oldhash = Get-FileHash $PROFILE
+#         Invoke-RestMethod $url -OutFile "$env:temp/Microsoft.PowerShell_profile.ps1"
+#         $newhash = Get-FileHash "$env:temp/Microsoft.PowerShell_profile.ps1"
+#         if ($newhash.Hash -ne $oldhash.Hash) {
+#             Copy-Item -Path "$env:temp/Microsoft.PowerShell_profile.ps1" -Destination $PROFILE -Force
+#             Write-Host "Profile has been updated. Please restart your shell to reflect changes" -ForegroundColor Magenta
+#         }
+#     } catch {
+#         Write-Error "Unable to check for `$profile updates"
+#     } finally {
+#         Remove-Item "$env:temp/Microsoft.PowerShell_profile.ps1" -ErrorAction SilentlyContinue
+#     }
+# }
+# # Update-Profile
 
 function Update-PowerShell {
     if (-not $global:canConnectToGitHub) {
@@ -99,7 +99,7 @@ else { 'notepad' }
 
 
 Set-Alias -Name vim -Value $EDITOR
-Set-Alias -Name sudo -Value gsudo
+
 function Edit-Profile {
     vim $PROFILE.CurrentUserAllHosts
 }
@@ -132,14 +132,33 @@ function unzip ($file) {
     $fullFile = Get-ChildItem -Path $pwd -Filter $file | ForEach-Object { $_.FullName }
     Expand-Archive -Path $fullFile -DestinationPath $pwd
 }
-function yy {
-    $tmp = [System.IO.Path]::GetTempFileName()
-    yazi $args --cwd-file="$tmp"
-    $cwd = Get-Content -Path $tmp
-    if (-not [String]::IsNullOrEmpty($cwd) -and $cwd -ne $PWD.Path) {
-        Set-Location -LiteralPath $cwd
+
+function hb {
+    if ($args.Length -eq 0) {
+        Write-Error "No file path specified."
+        return
     }
-    Remove-Item -Path $tmp
+    
+    $FilePath = $args[0]
+    
+    if (Test-Path $FilePath) {
+        $Content = Get-Content $FilePath -Raw
+    }
+    else {
+        Write-Error "File path does not exist."
+        return
+    }
+    
+    $uri = "http://bin.christitus.com/documents"
+    try {
+        $response = Invoke-RestMethod -Uri $uri -Method Post -Body $Content -ErrorAction Stop
+        $hasteKey = $response.key
+        $url = "http://bin.christitus.com/$hasteKey"
+        Write-Output $url
+    }
+    catch {
+        Write-Error "Failed to upload the document. Error: $_"
+    }
 }
 function grep($regex, $dir) {
     if ( $dir ) {
@@ -246,10 +265,7 @@ Set-PSReadLineOption -Colors @{
 }
 
 ## Final Line to set prompt
-# Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
-oh-my-posh.exe init pwsh --config "https://raw.githubusercontent.com/Critlist/powershell-profile/main/easy-term.omp.json" | Invoke-Expression 
-Import-Module PSReadLine
-# Invoke-Expression (&starship init powershell)
+oh-my-posh.exe init pwsh --config "C:\Users\rtac\Desktop\Mikeys_Junk\png\easy-term.omp.json" | Invoke-Expression 
 
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     Invoke-Expression (& { (zoxide init powershell | Out-String) })
