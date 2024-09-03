@@ -76,19 +76,19 @@
           "type": "status"
         }
       ],
-      "type": "prompt"
-    },
-    {
-      "alignment": "left",
-      "newline": true,
-      "segments": [
-        {
-          "foreground": "#f1184c",
-          "style": "plain",
-          "template": "\u279c ",
-          "type": "text"
-        }
-      ],
+//      "type": "prompt"
+//    },
+//    {
+//      "alignment": "left",
+//      "newline": true,
+//      "segments": [
+//        {
+//          "foreground": "#f1184c",
+//          "style": "plain",
+//          "template": "\u279c ",
+//          "type": "text"
+//        }
+//      ],
       "type": "prompt"
     },
     {
