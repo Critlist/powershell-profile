@@ -21,7 +21,7 @@
         {
           "background": "#242424",
           "foreground": "#f1184c",
-          "powerline_symbol": "\ue0b0",
+          "powerline_symbol": "\ue0b0", 
           "style": "powerline",
           "template": "- root \uf0e7",
           "type": "root"
