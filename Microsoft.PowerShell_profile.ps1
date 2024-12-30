@@ -123,7 +123,7 @@ function uptime {
     }
 }
 
-function reload-profile {
+function r-p {
     & $profile
 }
 
@@ -245,6 +245,14 @@ Set-PSReadLineOption -Colors @{
     String    = 'DarkCyan'
 }
 
+function rdserver {
+    ssh -i "RustDesk Server.pem" ubuntu@ec2-18-222-69-42.us-east-2.compute.amazonaws.com
+}
+
+function arch {
+    ssh howk@172.17.1.78
+}
+
 ## Final Line to set prompt
 # Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 oh-my-posh.exe init pwsh --config "https://raw.githubusercontent.com/Critlist/powershell-profile/main/easy-term.omp.json" | Invoke-Expression 
@@ -265,3 +273,18 @@ else {
         Write-Error "Failed to install zoxide. Error: $_"
     }
 }
+(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression
+(& uvx --generate-shell-completion powershell) | Out-String | Invoke-Expression
+
+#f45873b3-b655-43a6-b217-97c00aa0db58 PowerToys CommandNotFound module
+
+Import-Module -Name Microsoft.WinGet.CommandNotFound
+#f45873b3-b655-43a6-b217-97c00aa0db58
+
+# Auto ls after cd
+function Set-LocationAndList {
+    param($path)
+    Set-Location $path
+    Get-ChildItem
+}
+Set-Alias -Name cd -Value Set-LocationAndList -Option AllScope -Force
